@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="{% static "style/base.css" %}" />
+    <title>{% block title %}FakeFimls{% endblock %}</title>
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+
+<span vocab="https://schema.org/">
+
+<div id="header">
+
+<div class="menu-container">
+    {% block sidebar %}
+        <a class ="menu-text" href="/fakefilmsweb/">Home</a>
+        <a class ="menu-text" href="/fakefilmsweb/serie/list">Series</a>
+        {% if user.is_authenticated %}
+        <a class ="menu-text" href="{% url 'fakefilmsweb:movie_user_list' user.id %}">My movies</a>
+        <a class ="menu-text" href="{% url 'fakefilmsweb:serie_user_list' user.id %}">My series</a>
+        {% else %}
+        <div></div>
+        <div></div>
+        {% endif %}
+    {% endblock %}
+
+    {% block header %}
+        {% if user.is_authenticated %}
+            <p class="login-element">User: {{ user.username }} | <a style="color: #fff;" href="{% url 'logout' %}">LOGOUT</a></p>
+        {% else %}
+            <p class=login-element><a style="color: #fff;" href="{% url 'login' %}">LOGIN</a></p>
+        {% endif %}
+    {% endblock %}
+</div>
+
+<div id="content">
+    {% block content %}
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% endblock %}
+</div>
+
+<div id="footer">
+    {% block footer %}{% endblock %}
+</div>
+</span>
+</body>
+</html>

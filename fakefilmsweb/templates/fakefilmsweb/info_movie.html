@@ -1,0 +1,36 @@
+{% extends "fakefilmsweb/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static "style/info.css" %}" />
+{% endblock %}
+{% block content %}
+<div class="center" typeof="Movie">
+    <h1 class="title">
+        <span property="name">{{movie.movie_name}}</span>
+    </h1>
+    <div class="info-container">
+        <table class="table">
+            <tr>
+                <td><b>Director</b></td>
+                <td><span property="director">{{movie.director}}</span></td>
+            </tr>
+            <tr>
+                <td><b>Categoria</b></td>
+                <td><span property="genre">{{movie.movie_category}}</span></td>
+            </tr>
+            <tr>
+                <td><b>Year</b></td>
+                <td><span property="dateCreated">{{movie.year}}</span></td>
+            </tr>
+            <tr><img property="image" src="https://upload.wikimedia.org/wikipedia/en/1/19/Titanic_%28Official_Film_Poster%29.png" title="movie_image"></tr>
+        </table>
+        <div class="interaction-container">  
+            {% if user.is_authenticated and user == movie.user %}
+                <a class="action-button"  href="{% url 'fakefilmsweb:movie_edit' movie.id %}">edit</a>
+                <a class="action-button" href="{% url 'fakefilmsweb:movie_delete' movie.id %}">remove</a>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}

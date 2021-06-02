@@ -1,0 +1,24 @@
+{% extends "fakefilmsweb/base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="center">
+    <h1 class="title">
+    MY MOVIES
+    </h1>
+    <ul class="list">
+        {% for movie in movies_list %}
+        {% if movie.user == user %}
+        <li class="list-element">
+            <a class="link-list" href="{% url 'fakefilmsweb:info_movie' movie.movie.id %}" typeof="Movie">
+            <span property="name">{{ movie.movie.movie_name }}</span>
+                <img property="image" src="https://upload.wikimedia.org/wikipedia/en/1/19/Titanic_%28Official_Film_Poster%29.png" title="movie_image">
+            </a>
+            <a id="menos" href="{% url 'fakefilmsweb:movie_list_delete' user.id movie.movie.id %}"><img src="{% static "/images/minus.png" %}" style="height: 30px; width: 30px; margin-top: 3px;"></a>
+        </li>
+        {% endif %}
+        {% empty %}<li class="no-elements-msg">You haven't registered any movie</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

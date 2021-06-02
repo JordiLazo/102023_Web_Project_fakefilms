@@ -1,0 +1,35 @@
+{% extends "fakefilmsweb/base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static "style/info.css" %}" />
+{% endblock %}
+{% block content %}
+<div class="center" typeof="TVSeries">
+    <h1 class="title">
+         <span property="episode">{{episode.name}}</span>
+    </h1>
+    <div class="info-container">
+        <table class="table">
+            <tr>
+                <td><b>Serie</b></td>
+                <td><span property="name">{{episode.serie.serie_name}}</span></td>
+            </tr>
+            <tr>
+                <td><b>Season</b></td>
+                <td><span property="containsSeason">{{episode.season}}</span></td>
+            </tr>
+            <tr>
+                <td><b>Number</b></td>
+                <td><span property="position">{{episode.number}}</span></td>
+            </tr>
+        </table>
+        <div class="interaction-container">  
+            {% if user.is_authenticated and user == episode.serie.user %}
+                <a class="action-button"  href="{% url 'fakefilmsweb:episode_edit' episode.serie.id episode.id %}">edit</a>
+                <a class="action-button"  href="{% url 'fakefilmsweb:episode_delete' episode.serie.id episode.id %}">delete</a>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+{% endblock %}
